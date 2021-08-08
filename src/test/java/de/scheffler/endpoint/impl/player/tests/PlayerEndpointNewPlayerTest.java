@@ -1,11 +1,8 @@
 package de.scheffler.endpoint.impl.player.tests;
 
-import de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameEndpointMessages;
 import de.scheffler.endpoint.api.player.dto.PlayerDto;
-import de.scheffler.endpoint.impl.bowlinggame.requestfactory.BowlingGameEndpointRequestResponseFactory;
 import de.scheffler.endpoint.impl.player.requestfactory.PlayerDtoBuilder;
 import de.scheffler.endpoint.impl.player.requestfactory.PlayerEndpointRequestResponseFactory;
-import de.scheffler.endpoint.impl.player.requestfactory.PlayerEndpointRequestResponseFactoryImpl;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
@@ -14,8 +11,6 @@ import javax.inject.Inject;
 
 import java.util.UUID;
 
-import static de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameEndpointMessages.PLAYER_ADDED_TO_GAME_RESPONSE;
-import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +22,7 @@ class PlayerEndpointNewPlayerTest {
 
     @Test
     void newPlayer() {
-        PlayerDto playerDto = new PlayerDto();
-        playerDto.setName("Franz Scheffler");
+        PlayerDto playerDto = new PlayerDtoBuilder().newPlayerDto().withDisplayName("Franz Scheffler").build();
         Response responseFirstAddNewPlayerRequest = requestResponseFactory.createNewPlayerResponse(playerDto);
         UUID playerId1 = responseFirstAddNewPlayerRequest.body().as(UUID.class);
         assertEquals(SC_OK, responseFirstAddNewPlayerRequest.statusCode());

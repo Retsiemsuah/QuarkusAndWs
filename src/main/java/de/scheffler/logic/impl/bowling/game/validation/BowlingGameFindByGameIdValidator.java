@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 import java.util.UUID;
 
-import static de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameEndpointMessages.NO_VALID_GAME_ID_RESPONSE_TEXT;
+import static de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameEndpointMessages.ERROR_NO_VALID_GAME_ID;
 
 @RequestScoped
 public class BowlingGameFindByGameIdValidator extends ResponseEndpointValidator {
@@ -23,7 +23,7 @@ public class BowlingGameFindByGameIdValidator extends ResponseEndpointValidator 
     public ResponseEndpointValidator paramsAreLogicallyValid(Object... args) {
         BowlingGame game = bowlingGameService.findByUniqueGameId((UUID)args[0]);
         if(game==null){
-            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(NO_VALID_GAME_ID_RESPONSE_TEXT, ((UUID)args[0]).toString())).build());
+            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(ERROR_NO_VALID_GAME_ID, ((UUID)args[0]).toString())).build());
             return this;
         }
         return this;

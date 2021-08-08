@@ -1,4 +1,4 @@
-package de.scheffler.endpoint.impl.bowlinggame;
+package de.scheffler.endpoint.impl.bowlinggame.tests;
 
 import de.scheffler.endpoint.impl.bowlinggame.requestfactory.BowlingGameEndpointRequestResponseFactory;
 import io.quarkus.test.junit.QuarkusTest;

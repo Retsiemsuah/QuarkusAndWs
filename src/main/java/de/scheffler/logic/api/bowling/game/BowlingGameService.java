@@ -13,4 +13,7 @@ public interface BowlingGameService {
     void addNewPlayerToGame(UUID gameFromDb, UUID newPlayer);
 
     void startGame(UUID game);
+
+    void addThrowToGame(int throwValue, UUID uniqueGameId);
+
 }

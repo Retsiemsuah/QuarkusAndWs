@@ -18,12 +18,14 @@ public class GameRun extends PanacheEntityBase {
     private LocalPlayer player;
 
     @OneToMany(mappedBy = "belongingToRun")
-    private List<ThrowHistory> throwHistoryList = new ArrayList<>();
+    @OrderBy("framePosition ASC")
+    private List<Frame> frameHistory = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     BowlingGame bowlingGame;
 
     private int runNumberWithinGame;
+    boolean gameRunFinished;
 
     public GameRun(LocalPlayer player, int runNumberWithinGame) {
         this.player = player;
@@ -50,12 +52,12 @@ public class GameRun extends PanacheEntityBase {
         this.player = player;
     }
 
-    public List<ThrowHistory> getThrowHistoryList() {
-        return throwHistoryList;
+    public List<Frame> getFrameHistory() {
+        return frameHistory;
     }
 
-    public void setThrowHistoryList(List<ThrowHistory> throwHistoryList) {
-        this.throwHistoryList = throwHistoryList;
+    public void setFrameHistory(List<Frame> throwHistoryList) {
+        this.frameHistory = throwHistoryList;
     }
 
     public GameRun(BowlingGame bowlingGame) {
@@ -76,5 +78,13 @@ public class GameRun extends PanacheEntityBase {
 
     public void setRunNumberWithinGame(int runNumberWithinGame) {
         this.runNumberWithinGame = runNumberWithinGame;
+    }
+
+    public boolean isGameRunFinished() {
+        return gameRunFinished;
+    }
+
+    public void setGameRunFinished(boolean gameRunFinished) {
+        this.gameRunFinished = gameRunFinished;
     }
 }

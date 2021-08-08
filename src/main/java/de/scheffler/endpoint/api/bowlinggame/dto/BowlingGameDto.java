@@ -7,10 +7,9 @@ import java.util.List;
 
 public class BowlingGameDto {
     String gameId;
-
     BowlingGameState gameState;
-
     List<GameRunDto> gameRunDtoArrayList = new ArrayList<>();
+
     public String getGameId() {
         return gameId;
     }

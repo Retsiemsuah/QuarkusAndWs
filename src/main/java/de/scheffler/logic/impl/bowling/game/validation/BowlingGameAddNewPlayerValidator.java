@@ -34,21 +34,21 @@ public class BowlingGameAddNewPlayerValidator extends ResponseEndpointValidator 
 
         BowlingGame gameFromDb = bowlingGameService.findByUniqueGameId(gameId);
         if (gameFromDb == null) {
-            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(NO_VALID_GAME_ID_RESPONSE_TEXT, gameId)).build());
+            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(ERROR_NO_VALID_GAME_ID, gameId)).build());
             return this;
         }
 
         LocalPlayer player = playerService.findByUniqueId(playerId);
         if(player== null){
-            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(NO_VALID_PLAYER_ID_RESPONSE, playerId)).build());
+            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(ERROR_NO_VALID_PLAYER_ID, playerId)).build());
             return this;
         }
         if (gameFromDb.getRegisteredGameRuns().size() >= 6) {
-            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(MAX_PLAYER_LIMIT_ALREADY_REACHED, gameId)).build());
+            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(ERROR_MAX_PLAYER_LIMIT_ALREADY_REACHED, gameId)).build());
             return this;
         }
         if(gameFromDb.getGameState()!= BowlingGameState.NOT_STARTED){
-            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(PLAYER_CANT_BE_ADDED_GAME_ALREADY_STARTED, playerId)).build());
+            setErrorResponse(Response.status(HttpStatus.SC_BAD_REQUEST).entity(String.format(ERROR_PLAYER_CANT_BE_ADDED_GAME_ALREADY_STARTED, playerId)).build());
             return this;
         }
         return this;

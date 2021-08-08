@@ -37,4 +37,13 @@ public class BowlingGameEndpointRequestResponseFactoryImpl implements BowlingGam
                 .when()
                     .get("/bowling/findGameById/{gameId}");
     }
+
+    @Override
+    public Response startBowlingGameResponse(UUID gameId) {
+        return  given()
+                .with()
+                .pathParam("gameId", gameId)
+                .when()
+                .get("/bowling/startGame/{gameId}");
+    }
 }

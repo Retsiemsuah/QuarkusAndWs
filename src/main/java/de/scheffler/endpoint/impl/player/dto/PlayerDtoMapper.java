@@ -1,4 +1,4 @@
-package de.scheffler.endpoint.impl.player;
+package de.scheffler.endpoint.impl.player.dto;
 
 import de.scheffler.data.api.player.LocalPlayer;
 import de.scheffler.endpoint.api.player.dto.PlayerDto;

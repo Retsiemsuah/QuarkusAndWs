@@ -5,14 +5,12 @@ import de.scheffler.data.api.player.LocalPlayer;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 @ApplicationScoped
 public class GameRunFactoryImpl implements GameRunFactory {
 
     @Inject
-    ThrowHistoryFactory throwHistoryFactory;
+    FrameFactory throwHistoryFactory;
 
     @Inject
     GameRunRepository gameRunRepository;
@@ -20,14 +18,11 @@ public class GameRunFactoryImpl implements GameRunFactory {
     @Override
     public GameRun createEmptyGameRunFor(LocalPlayer newPlayer, BowlingGame gameFromDb) {
         GameRun newRun = new GameRun();
+        gameRunRepository.persist(newRun);
         newRun.setBowlingGame(gameFromDb);
         newRun.setPlayer(newPlayer);
         newRun.setRunNumberWithinGame(gameFromDb.getRegisteredGameRuns().size()+1);
-        List<ThrowHistory> emptyHistoryList = new ArrayList<>();
-        for(int i = 0 ; i < 10 ; i++)
-            emptyHistoryList.add(throwHistoryFactory.createEmptyThrowHistroyFor(newRun));
-
-        newRun.setThrowHistoryList(emptyHistoryList);
+        newRun.setFrameHistory(throwHistoryFactory.createEmptyFrame(newRun));
         gameRunRepository.persist(newRun);
         return newRun;
     }

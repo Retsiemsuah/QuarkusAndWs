@@ -1,6 +1,7 @@
 package de.scheffler.endpoint.impl.bowlinggame;
 
 import de.scheffler.endpoint.api.bowlinggame.BowlingGameEndpoint;
+import de.scheffler.endpoint.impl.bowlinggame.dto.BowlingGameDtoMapper;
 import de.scheffler.logic.impl.common.validation.ResponseEndpointValidator;
 import de.scheffler.logic.api.bowling.game.validation.BowlingGameEndpointValidatorProvider;
 import de.scheffler.logic.api.bowling.game.BowlingGameService;
@@ -56,10 +57,10 @@ public class BowlingGameEndpointImpl implements BowlingGameEndpoint {
 
     @Override
     public Response addThrowToGame(int throwValue, UUID uniqueGameId) {
-        ResponseEndpointValidator validator = validatorProvider.newStartGameValidator();
+        ResponseEndpointValidator validator = validatorProvider.newAddThrowToGameValidator();
         if (validator.afterValidationOf(throwValue, uniqueGameId).preparedErrorResponseIsNotEmpty())
             return validator.getErrorResponse();
-//        bowlingGameService.addThrowToGame(throwValue,uniqueGameId);
+        bowlingGameService.addThrowToGame(throwValue,uniqueGameId);
         return null;
     }
 

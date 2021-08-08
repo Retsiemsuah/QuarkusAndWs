@@ -1,4 +1,4 @@
-package de.scheffler.endpoint.impl.bowlinggame;
+package de.scheffler.endpoint.impl.bowlinggame.tests;
 
 import de.scheffler.data.api.bowling.game.BowlingGameState;
 import de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameDto;
@@ -47,7 +47,7 @@ class BowlingGameEndpointAddNewPlayerToGameTest {
         Response responseForAddingFranz = bowlingRequestFactory.addNewPlayerToGame(gameId, playerFranzId);
         assertEquals(HttpStatus.SC_OK, responseForAddingFranz.statusCode());
 
-        Response responseForAddingBob = bowlingRequestFactory.addNewPlayerToGame(gameId, playerFranzId);
+        Response responseForAddingBob = bowlingRequestFactory.addNewPlayerToGame(gameId, playerBobId);
         assertEquals(HttpStatus.SC_OK, responseForAddingBob.statusCode());
 
         Response gameWithPlayersResponse =bowlingRequestFactory.findBowlingGameByIdResponse(gameId);
@@ -57,13 +57,5 @@ class BowlingGameEndpointAddNewPlayerToGameTest {
         assertEquals(gameId.toString(), gameDto.getGameId());
         assertEquals(2,gameDto.getGameRunDtoArrayList().size());
         assertEquals(BowlingGameState.NOT_STARTED,gameDto.getGameState());
-
-
-
-//        String uniquePlayerName = "Franz Scheffler";
-//        Response responseForNewPlayer = bowlingRequestFactory.addNewPlayerToGame(validGameId, uniquePlayerName);
-//
-//        assertEquals(SC_OK, responseForNewPlayer.statusCode());
     }
-
 }

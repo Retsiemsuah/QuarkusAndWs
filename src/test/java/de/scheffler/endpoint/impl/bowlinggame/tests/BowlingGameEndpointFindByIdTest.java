@@ -1,4 +1,4 @@
-package de.scheffler.endpoint.impl.bowlinggame;
+package de.scheffler.endpoint.impl.bowlinggame.tests;
 
 import de.scheffler.data.api.bowling.game.BowlingGameState;
 import de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameDto;

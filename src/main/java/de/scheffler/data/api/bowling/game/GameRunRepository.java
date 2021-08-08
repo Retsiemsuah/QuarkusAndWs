@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface GameRunRepository extends PanacheRepository<GameRun> {
     List<GameRun> findBy(BowlingGame game);
+
+    GameRun findGameRunBy(BowlingGame gameFromDb, int currentRunNumberWithinGame);
 }

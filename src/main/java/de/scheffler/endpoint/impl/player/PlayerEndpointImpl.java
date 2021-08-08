@@ -2,6 +2,7 @@ package de.scheffler.endpoint.impl.player;
 
 import de.scheffler.endpoint.api.player.PlayerEndpoint;
 import de.scheffler.endpoint.api.player.dto.PlayerDto;
+import de.scheffler.endpoint.impl.player.dto.PlayerDtoMapper;
 import de.scheffler.logic.impl.common.validation.ResponseEndpointValidator;
 import de.scheffler.logic.api.player.validation.PlayerEndpointValidatorProvider;
 import de.scheffler.logic.api.player.LocalPlayerService;

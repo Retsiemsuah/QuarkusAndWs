@@ -10,4 +10,6 @@ public interface BowlingGameEndpointRequestResponseFactory {
     Response addNewPlayerToGame(UUID gameId, UUID uniquePlayerName);
 
     Response findBowlingGameByIdResponse(UUID gameId);
+
+    Response startBowlingGameResponse(UUID gameId);
 }

@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -25,22 +26,22 @@ public class BowlingGameEndpointValidatorProviderImpl implements BowlingGameEndp
     BowlingGameAddThrowToGameValidator addThrowValidator;
 
     @Override
-    public BowlingGameFindByGameIdValidator newFindByIdValidator() {
-        return findByGameValidator.withExpectedParameterCountOf(1).ofClasses(new LinkedList<>(Arrays.asList(UUID.class))).allNotNullable().build();
+    public ResponseEndpointValidator newFindByIdValidator() {
+        return findByGameValidator.withExpectedParameterCountOf(1).ofClasses(new LinkedList<>(List.of(UUID.class))).allNotNullable().build();
     }
 
     @Override
-    public BowlingGameAddNewPlayerValidator addNewPlayerValidator() {
+    public ResponseEndpointValidator addNewPlayerValidator() {
         return addNewPlayerValidator.withExpectedParameterCountOf(2).ofClasses(new LinkedList<>(Arrays.asList(UUID.class,UUID.class))).allNotNullable().build();
     }
 
     @Override
-    public BowlingGameStartGameValidator newStartGameValidator() {
-        return gameStartGameValidator.withExpectedParameterCountOf(1).ofClasses(new LinkedList<>(Arrays.asList(UUID.class))).allNotNullable().build();
+    public ResponseEndpointValidator newStartGameValidator() {
+        return gameStartGameValidator.withExpectedParameterCountOf(1).ofClasses(new LinkedList<>(List.of(UUID.class))).allNotNullable().build();
     }
 
     @Override
-    public BowlingGameAddThrowToGameValidator newAddThrowToGameValidator() {
+    public ResponseEndpointValidator newAddThrowToGameValidator() {
         return addThrowValidator.withExpectedParameterCountOf(2).ofClasses(new LinkedList<>(Arrays.asList(Integer.class, UUID.class))).allNotNullable().build();
     }
 }

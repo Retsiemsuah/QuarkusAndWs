@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class BowlingGame extends PanacheEntityBase{
+public class BowlingGame extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -22,10 +22,10 @@ public class BowlingGame extends PanacheEntityBase{
     @Enumerated(EnumType.STRING)
     BowlingGameState gameState;
 
-    @OneToMany(mappedBy="bowlingGame")
+    @OneToMany(mappedBy = "bowlingGame")
     private List<GameRun> registeredGameRuns = new ArrayList<>();
 
-    int currentGameRun;
+    int currentRunNumberWithinGame;
 
     public List<GameRun> getRegisteredGameRuns() {
         return registeredGameRuns;
@@ -44,20 +44,20 @@ public class BowlingGame extends PanacheEntityBase{
     }
 
     public void setState(BowlingGameState newState) {
-        if(gameState!=BowlingGameState.FINISHED) {
-            gameState = newState;
-        }
+        gameState = newState;
     }
 
     public BowlingGameState getGameState() {
         return gameState;
     }
 
-    public int getCurrentGameRun() {
-        return currentGameRun;
+    public int getCurrentRunNumberWithinGame() {
+        return currentRunNumberWithinGame;
     }
 
-    public void setCurrentGameRun(int currentGameRun) {
-        this.currentGameRun = currentGameRun;
+    public void setCurrentRunNumberWithinGame(int currentGameRun) {
+        this.currentRunNumberWithinGame = currentGameRun;
     }
+
+
 }

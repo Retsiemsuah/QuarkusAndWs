@@ -1,5 +1,6 @@
 package de.scheffler.logic.impl.player.validation;
 
+import de.scheffler.endpoint.api.player.dto.PlayerDto;
 import de.scheffler.logic.api.player.validation.PlayerEndpointValidatorProvider;
 import de.scheffler.logic.impl.common.validation.ResponseEndpointValidator;
 
@@ -20,7 +21,7 @@ public class PlayerEndpointValidatorProviderImpl implements PlayerEndpointValida
 
     @Override
     public ResponseEndpointValidator newCreateNewPlayerValidator() {
-        return gameStartGameValidator.withExpectedParameterCountOf(1).ofClasses(new LinkedList<>(Arrays.asList(UUID.class))).allNotNullable().build();
+        return gameStartGameValidator.withExpectedParameterCountOf(1).ofClasses(new LinkedList<>(Arrays.asList(PlayerDto.class))).allNotNullable().build();
     }
 
     @Override
