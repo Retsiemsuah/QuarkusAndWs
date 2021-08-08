@@ -1,9 +1,11 @@
-package de.scheffler.endpoint.impl.bowlinggame;
+package de.scheffler.endpoint.impl.bowlinggame.requestfactory;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
 import javax.enterprise.context.ApplicationScoped;
+
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 
@@ -12,14 +14,14 @@ public class BowlingGameEndpointRequestResponseFactoryImpl implements BowlingGam
 
     @Override
     public Response getNewBowlingGameResponse() {
-        return RestAssured.given()
+        return given()
                 .when()
-                .get("/bowling/newGame");
+                .post("/bowling/newGame");
     }
 
     @Override
-    public Response addNewPlayerToGame(String gameId, String uniquePlayerName) {
-        return RestAssured.given()
+    public Response addNewPlayerToGame(UUID gameId, UUID uniquePlayerName) {
+        return given()
                 .with()
                     .pathParam("uniqueGameId", gameId)
                     .pathParam("uniquePlayerName", uniquePlayerName)
@@ -28,8 +30,8 @@ public class BowlingGameEndpointRequestResponseFactoryImpl implements BowlingGam
     }
 
     @Override
-    public Response getFindBowlingGameByIdResponse(long gameId) {
-        return  RestAssured.given()
+    public Response findBowlingGameByIdResponse(UUID gameId) {
+        return  given()
                 .with()
                     .pathParam("gameId", gameId)
                 .when()

@@ -1,7 +1,7 @@
 package de.scheffler.data.api.bowling.game;
 
-import de.scheffler.data.api.player.Player;
+import de.scheffler.data.api.player.LocalPlayer;
 
 public interface GameRunFactory {
-    GameRun createEmptyGameRunFor(Player newPlayer);
+    GameRun createEmptyGameRunFor(LocalPlayer newPlayer, BowlingGame gameFromDb);
 }

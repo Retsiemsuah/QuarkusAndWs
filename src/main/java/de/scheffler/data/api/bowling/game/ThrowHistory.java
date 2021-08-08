@@ -10,7 +10,7 @@ public class ThrowHistory extends PanacheEntity {
     int firstThrow;
     int secondThrow;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     GameRun belongingToRun;
 
     public ThrowHistory() {

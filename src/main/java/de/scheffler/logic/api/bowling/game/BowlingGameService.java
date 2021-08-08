@@ -1,7 +1,6 @@
 package de.scheffler.logic.api.bowling.game;
 
 import de.scheffler.data.api.bowling.game.BowlingGame;
-import de.scheffler.data.api.player.Player;
 
 import java.util.UUID;
 
@@ -11,7 +10,7 @@ public interface BowlingGameService {
 
     BowlingGame findByUniqueGameId(UUID uniqueGameId);
 
-    void save(BowlingGame gameFromDb);
+    void addNewPlayerToGame(UUID gameFromDb, UUID newPlayer);
 
-    void addNewPlayerToGame(BowlingGame gameFromDb, Player newPlayer);
+    void startGame(UUID game);
 }

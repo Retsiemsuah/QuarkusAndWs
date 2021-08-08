@@ -1,8 +1,11 @@
 package de.scheffler.data.api.bowling.game;
 
+import de.scheffler.data.api.player.LocalPlayer;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class GameRun extends PanacheEntityBase {
@@ -11,21 +14,21 @@ public class GameRun extends PanacheEntityBase {
     @GeneratedValue
     private Long id;
 
-//    @ManyToOne
-//    private Player player;
-//
-//    @OneToMany
-//    private List<ThrowHistory> throwHistoryList = new ArrayList<>();
+    @ManyToOne
+    private LocalPlayer player;
+
+    @OneToMany(mappedBy = "belongingToRun")
+    private List<ThrowHistory> throwHistoryList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     BowlingGame bowlingGame;
 
     private int runNumberWithinGame;
 
-
-//    public GameRun(Player newPlayer) {
-//        player=newPlayer;
-//    }
+    public GameRun(LocalPlayer player, int runNumberWithinGame) {
+        this.player = player;
+        this.runNumberWithinGame=runNumberWithinGame;
+    }
 
     public GameRun() {
 
@@ -39,21 +42,22 @@ public class GameRun extends PanacheEntityBase {
         return id;
     }
 
-    //    public Player getPlayer() {
-//        return player;
-//    }
-//
-//    public void setPlayer(Player player) {
-//        this.player = player;
-//    }
-//
-//    public List<ThrowHistory> getThrowHistoryList() {
-//        return throwHistoryList;
-//    }
-//
-//    public void setThrowHistoryList(List<ThrowHistory> throwHistoryList) {
-//        this.throwHistoryList = throwHistoryList;
-//    }
+    public LocalPlayer getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(LocalPlayer player) {
+        this.player = player;
+    }
+
+    public List<ThrowHistory> getThrowHistoryList() {
+        return throwHistoryList;
+    }
+
+    public void setThrowHistoryList(List<ThrowHistory> throwHistoryList) {
+        this.throwHistoryList = throwHistoryList;
+    }
+
     public GameRun(BowlingGame bowlingGame) {
         this.bowlingGame = bowlingGame;
     }

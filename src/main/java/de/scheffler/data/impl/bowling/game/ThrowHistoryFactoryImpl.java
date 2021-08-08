@@ -12,6 +12,7 @@ import javax.inject.Inject;
 public class ThrowHistoryFactoryImpl implements ThrowHistoryFactory {
     @Inject
     ThrowHistoryRepository throwHistoryRepository;
+
     @Override
     public ThrowHistory createEmptyThrowHistroyFor(GameRun newRun) {
         ThrowHistory newHist = new ThrowHistory(newRun);

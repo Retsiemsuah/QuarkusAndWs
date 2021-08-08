@@ -25,6 +25,8 @@ public class BowlingGame extends PanacheEntityBase{
     @OneToMany(mappedBy="bowlingGame")
     private List<GameRun> registeredGameRuns = new ArrayList<>();
 
+    int currentGameRun;
+
     public List<GameRun> getRegisteredGameRuns() {
         return registeredGameRuns;
     }
@@ -49,5 +51,13 @@ public class BowlingGame extends PanacheEntityBase{
 
     public BowlingGameState getGameState() {
         return gameState;
+    }
+
+    public int getCurrentGameRun() {
+        return currentGameRun;
+    }
+
+    public void setCurrentGameRun(int currentGameRun) {
+        this.currentGameRun = currentGameRun;
     }
 }
