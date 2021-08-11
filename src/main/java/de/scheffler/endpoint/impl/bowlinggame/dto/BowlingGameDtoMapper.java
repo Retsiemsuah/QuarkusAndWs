@@ -18,48 +18,18 @@ import java.util.List;
 public class BowlingGameDtoMapper {
 
     @Inject
-    GameRunRepository gameRunRepository;
+    BowlingGameRunDtoMapper gameRunMapper;
 
-    @Transactional
+
     public BowlingGameDto createDtoFrom(BowlingGame game) {
         BowlingGameDto gameDto = new BowlingGameDto();
         gameDto.setGameId(game.getId().toString());
         gameDto.setGameState(game.getGameState());
-        gameDto.setGameRunDtoArrayList(mapGameRunDtoFrom(game));
+        gameDto.setGameRunDtoArrayList(gameRunMapper.mapGameRunDtoFrom(game));
         return gameDto;
     }
 
-    private List<GameRunDto> mapGameRunDtoFrom(BowlingGame game) {
-        List<GameRunDto>runDtos = new ArrayList<>();
-        List<GameRun> runsToForGame=gameRunRepository.findBy(game);
-        if(runsToForGame.isEmpty()){
-            return runDtos;
-        }
-        for(GameRun run:runsToForGame){
-            runDtos.add(getRunDtoFrom(run));
-        }
-        return runDtos;
-    }
 
-    private GameRunDto getRunDtoFrom(GameRun run) {
-        GameRunDto gameRunDto = new GameRunDto();
-        gameRunDto.setGamePosition(run.getRunNumberWithinGame());
-        gameRunDto.setPlayerDisplayName(run.getPlayer().getDisplayName());
-        gameRunDto.setFrames(mapFrameDtosFrom(run));
-        return gameRunDto;
-    }
 
-    private List<FrameDto> mapFrameDtosFrom(GameRun run) {
-        List<FrameDto> frameDtos = new ArrayList<>();
-        for(Frame frameToConvert : run.getFrameHistory()){
-            FrameDto dto = new FrameDto();
-            dto.setFrameNumber(frameToConvert.getFramePosition());
-            dto.setFirstThrow(frameToConvert.getFirstThrow());
-            dto.setSecondThrow(frameToConvert.getSecondThrow());
-            dto.setThirdThrow(frameToConvert.getThirdThrow());
-            dto.setScore(frameToConvert.getTotalScore());
-            frameDtos.add(dto);
-        }
-        return frameDtos;
-    }
+
 }

@@ -1,6 +1,7 @@
 package de.scheffler.logic.impl.bowling.game;
 
 import de.scheffler.data.api.bowling.game.Frame;
+import de.scheffler.data.api.bowling.game.FrameRepository;
 import de.scheffler.data.api.bowling.game.GameRun;
 import de.scheffler.data.api.bowling.game.GameRunRepository;
 import de.scheffler.logic.api.bowling.game.FrameService;
@@ -9,6 +10,7 @@ import de.scheffler.logic.api.bowling.game.GameRunService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @ApplicationScoped
 public class GameRunServiceImpl implements GameRunService {
@@ -18,6 +20,9 @@ public class GameRunServiceImpl implements GameRunService {
 
     @Inject
     FrameService frameService;
+
+    @Inject
+    FrameRepository frameRepository;
 
     @Override
     @Transactional
@@ -35,35 +40,40 @@ public class GameRunServiceImpl implements GameRunService {
     @Override
     @Transactional
     public void calculateFrameScores(GameRun gameRun) {
-        for (int currFrameIndex = 0; currFrameIndex <= gameRun.getFrameHistory().size(); currFrameIndex++) {
-            Frame currentFrame = gameRun.getFrameHistory().get(currFrameIndex);
+        List<Frame> frameHistory = frameRepository.findBy(gameRun);
+        for (int currFrameIndex = 0; currFrameIndex <= frameHistory.size(); currFrameIndex++) {
+            Frame currentFrame = frameHistory.get(currFrameIndex);
             if (!currentFrame.isFrameIsFinished())
                 return;
 
-            int calculatedScoreFromPrevFrame = getCalculatedScoreFromPrevFrame(gameRun, currFrameIndex);
+            int calculatedScoreFromPrevFrame = getCalculatedScoreFromPrevFrame(frameHistory, currFrameIndex);
             if (currentFrame.isIsLastFrameWithinRun()) {
                 currentFrame.setTotalScore(calculateFinalScore(calculatedScoreFromPrevFrame, currentFrame));
+                currentFrame.setScoreIsCalculated(true);
+                frameService.save(currentFrame);
                 return;
             }
             if (noStrikeOrSpareIsPresent(currentFrame)) {
                 calculatedScoreFromPrevFrame = calculatedScoreFromPrevFrame + currentFrame.getFirstThrow() + currentFrame.getSecondThrow();
                 currentFrame.setTotalScore(calculatedScoreFromPrevFrame);
+                currentFrame.setScoreIsCalculated(true);
                 frameService.save(currentFrame);
                 continue;
             }
-            Frame nextFrame = gameRun.getFrameHistory().get(currFrameIndex + 1);
+            Frame nextFrame = frameHistory.get(currFrameIndex + 1);
             if (!nextFrame.isFrameIsFinished()) {
                 return;
             }
             calculatedScoreFromPrevFrame = calculateScoreFromInformationWithStrikeOrSpare(calculatedScoreFromPrevFrame, currentFrame, nextFrame);
             currentFrame.setTotalScore(calculatedScoreFromPrevFrame);
+            currentFrame.setScoreIsCalculated(true);
             frameService.save(currentFrame);
         }
     }
 
-    private int getCalculatedScoreFromPrevFrame(GameRun gameRun, int currFrameIndex) {
+    private int getCalculatedScoreFromPrevFrame(List<Frame> frameHistory, int currFrameIndex) {
         if (currFrameIndex > 0) {
-            Frame previousFrame = gameRun.getFrameHistory().get(currFrameIndex - 1);
+            Frame previousFrame = frameHistory.get(currFrameIndex - 1);
             return previousFrame.isScoreIsCalculated() ? previousFrame.getTotalScore() : 0;
         }
         return 0;
@@ -87,13 +97,19 @@ public class GameRunServiceImpl implements GameRunService {
     }
 
     private int calculateScoreFromInformationWithStrikeOrSpare(int alreadyAchievedPoints, Frame currentFrame, Frame nextFrame) {
-        int score = alreadyAchievedPoints + currentFrame.getFirstThrow() + currentFrame.getSecondThrow();
+        int score = alreadyAchievedPoints +
+                escapeNull(currentFrame.getFirstThrow()) +
+                escapeNull(currentFrame.getSecondThrow());
         if (currentFrame.isStrike()) {
-            return score + nextFrame.getFirstThrow() + nextFrame.getSecondThrow();
+            return score + escapeNull(nextFrame.getFirstThrow()) + escapeNull(nextFrame.getSecondThrow());
         }
         if (currentFrame.isSpare()) {
-            return score + nextFrame.getFirstThrow();
+            return score + escapeNull(nextFrame.getFirstThrow());
         }
         return score;
+    }
+
+    private int escapeNull(Integer value) {
+        return value == null ? 0 : value.intValue();
     }
 }

@@ -47,18 +47,26 @@ public class FrameServiceImpl implements FrameService {
     }
 
     private void setValuesForSecondThrow(Frame frameToAddThrow, int throwValue) {
-        frameToAddThrow.setFirstThrow(throwValue);
-        if(!frameToAddThrow.isIsLastFrameWithinRun())
-            frameToAddThrow.setFrameIsFinished(true);
-        if(containsSpare(frameToAddThrow))
+        frameToAddThrow.setSecondThrow(throwValue);
+        if(containsSpare(frameToAddThrow)) {
             frameToAddThrow.setSpare(true);
+        }
+        frameToAddThrow.setFrameIsFinished(setFrameFinishedForSecondFrame(frameToAddThrow));
         frameRepository.persist(frameToAddThrow);
+    }
+
+    private boolean setFrameFinishedForSecondFrame(Frame frameToAddThrow) {
+        if(!frameToAddThrow.isIsLastFrameWithinRun())
+            return true;
+        return !frameToAddThrow.isStrike() || !frameToAddThrow.isSpare();
     }
 
     private void setValuesForFirstThrow(Frame frame, int throwValue) {
         frame.setFirstThrow(throwValue);
-        if(containsStrike(frame))
+        if(containsStrike(frame)) {
             frame.setStrike(true);
+            frame.setFrameIsFinished(true);
+        }
         frameRepository.persist(frame);
     }
 

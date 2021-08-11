@@ -12,4 +12,6 @@ public interface BowlingGameEndpointRequestResponseFactory {
     Response findBowlingGameByIdResponse(UUID gameId);
 
     Response startBowlingGameResponse(UUID gameId);
+
+    Response addThrowToGame(int throwValue, UUID gameId);
 }

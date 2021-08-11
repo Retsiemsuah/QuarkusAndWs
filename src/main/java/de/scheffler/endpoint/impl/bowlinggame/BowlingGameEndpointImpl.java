@@ -61,7 +61,7 @@ public class BowlingGameEndpointImpl implements BowlingGameEndpoint {
         if (validator.afterValidationOf(throwValue, uniqueGameId).preparedErrorResponseIsNotEmpty())
             return validator.getErrorResponse();
         bowlingGameService.addThrowToGame(throwValue,uniqueGameId);
-        return null;
+        return Response.ok().build();
     }
 
 }

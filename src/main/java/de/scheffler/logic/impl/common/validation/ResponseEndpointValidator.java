@@ -43,6 +43,7 @@ public abstract class ResponseEndpointValidator {
                 setErrorResponseToIternalServerErrorOccured();
                 return;
             }
+            i++;
         }
     }
 

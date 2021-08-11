@@ -2,8 +2,6 @@ package de.scheffler.endpoint.impl.bowlinggame.tests;
 
 import de.scheffler.data.api.bowling.game.BowlingGameState;
 import de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameDto;
-import de.scheffler.endpoint.api.bowlinggame.dto.BowlingGameEndpointMessages;
-import de.scheffler.endpoint.api.player.dto.PlayerDto;
 import de.scheffler.endpoint.impl.bowlinggame.requestfactory.BowlingGameEndpointRequestResponseFactory;
 import de.scheffler.endpoint.impl.player.requestfactory.PlayerDtoBuilder;
 import de.scheffler.endpoint.impl.player.requestfactory.PlayerEndpointRequestResponseFactory;
